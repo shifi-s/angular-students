@@ -1,0 +1,38 @@
+<ng-template #list>----------students-list-------------
+
+</ng-template>
+<div [ngTemplateOutlet]="list"></div>
+
+@for (student of this.studentList ; track student)
+{
+    <li appChangeColor = {{this.selectedColor}} >
+    {{student.Name}} {{student.Id}} <button (click)="showPopup()">delete</button> <button (click)="editStudent(student)">edit</button>
+    @if(student.Id==this.idForChecking)
+    {
+        @if(student.IsActive==false)
+        {
+            leftDate: {{student.leftDate}}
+        }
+        @else
+        {
+        <app-show-student-details [myStudent]="student" (studentToSave)="updateStudent($event)"></app-show-student-details>
+        }
+    }
+    </li>
+}<div [ngTemplateOutlet]="list"></div>
+<div></div>
+    <button (click)="editStudent(this.emptyStudent())">add</button>
+    @if(this.emptyStudent().Id==this.idForChecking)
+    {
+   <app-show-student-details [myStudent]="this.emptyStudent()" (studentToSave)="saveStudent($event)"></app-show-student-details>
+    }
+<app-information-popup></app-information-popup>
+<form>
+
+    <input type="radio" name="colors" value='lightblue' (change)="this.changeColor('lightblue')">
+lightblue
+     <input type="radio" name="colors" value="yellow" (change)="this.changeColor('yellow')">
+yellow
+  <input type="radio" name="colors" value='pink'  (change)="this.changeColor('pink')">
+pink
+</form>
